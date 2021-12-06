@@ -1,4 +1,3 @@
-from django.http import response
 from django.test import TestCase, SimpleTestCase
 
 from .models import Catalogue
