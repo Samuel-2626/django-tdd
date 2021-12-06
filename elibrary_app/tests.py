@@ -1,6 +1,8 @@
-from django.test import TestCase
+from django.http import response
+from django.test import TestCase, SimpleTestCase
 
 from .models import Catalogue
+from django.urls import reverse
 
 class CatalogueModelTests(TestCase):
 
@@ -20,5 +22,13 @@ class CatalogueModelTests(TestCase):
 
     def test_str_representation(self):
         self.assertEquals(str(self.c), "First Title")
+
+class ElibraryURLsTest(SimpleTestCase):
+
+    "Test the catalogue URLs"
+
+    def test_homepage_url_name(self):
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
 
     
