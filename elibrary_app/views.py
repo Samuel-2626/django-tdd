@@ -1,8 +1,11 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
-
-# Create your views here.
+from .forms import AddCatalogueForm
 
 def home(request):
-    return HttpResponse("Hello, world! Welcome to Educative!")
+
+    add_catalogue_form = AddCatalogueForm()
+
+    return render(request, 'home.html', {
+        "add_catalogue_form": add_catalogue_form,
+    })

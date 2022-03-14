@@ -8,7 +8,7 @@ class Catalogue(models.Model):
   )
  
     title = models.CharField(max_length=255)
-    isbn = models.CharField(max_length=13)
+    ISBN = models.CharField(max_length=13)
     author = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     availability = models.CharField(max_length=5, choices=STATUS_CHOICES, default='false')
