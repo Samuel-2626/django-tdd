@@ -15,38 +15,38 @@
         <h1>E-library Application &#128218;</h1>
         <hr>
         <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                      978-1-60309-025-4
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Django for Beginners (2018)</h5>
-                      <p class="card-text">
-                          <em>By:</em> John Doe
-                          <br>
-                          <br>
-                          <strong>Availability:</strong> True
-                        </p>
 
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                        978-1-60309-025-3
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Django for Beginners (2018)</h5>
-                        <p class="card-text">
-                            <em>By:</em> John Doe
-                            <br>
-                            <br>
-                            <strong>Availability:</strong> False
-                          </p>
-  
-                      </div>
-                  </div>
+          <div class="col-md-6">
+          
+        {% for book in books %}
+
+        
+
+          <div class="card mb-4">
+            <div class="card-header">
+                {{ book.ISBN }}
             </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <p class="card-text">
+                    <em>By:</em> {{ book.author }}
+                    <br>
+                    <br>
+                    <strong>Availability:</strong> {{ book.availability }}
+                  </p>
+
+              </div>
+          </div>
+
+      
+        
+        {% empty %}
+          <p>Empty...</p>
+        {% endfor %}
+
+        </div>
+        
+               
             <div class="col-md-6">
               
 
@@ -61,8 +61,9 @@
                       </div>
                    </form>
             </div>
+            </div>
         </div>
-      </div>
+     
     
 
   </body>

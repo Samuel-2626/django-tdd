@@ -5,9 +5,43 @@ from django.urls import reverse
 from .views import home
 from .forms import AddCatalogueForm
 
-class CatalogueTemplateTests(SimpleTestCase):
+class CatalogueViewTests(TestCase):
+
+    
+
+    def test_book_list_view(self):
+
+        """
+            A test method to show that the books we created are shown correctly on our template.
+        """
+
+        Book_1 = Catalogue.objects.create(
+            title='Django for Beginners (2018)', 
+            ISBN='978-1-60309-0', 
+            author='John Doe',
+            price=9.99,
+            availability='true'
+        )
+
+        Book_2 = Catalogue.objects.create(
+            title='Django for Professionals (2020)', 
+            ISBN='978-1-60309-3', 
+            author='Mary Doe',
+            price=11.99,
+            availability='false'
+        )
+
+        response = self.client.get(reverse('home'))
+
+        self.assertIn('Django for Professionals (2020)', response.content.decode())
+        self.assertIn('John Doe', response.content.decode())
+        self.assertIn('978-1-60309-3', response.content.decode())
+
+class CatalogueTemplateTests(TestCase):
+
     
     def test_homepage_template(self):
+
         response = self.client.get(reverse('home'))
         self.assertTemplateUsed(response, 'home.html')
 
@@ -20,7 +54,7 @@ class CatalogueTemplateTests(SimpleTestCase):
         self.assertNotContains(response, 'Hello World') 
     
 
-class CatalogueFormTests(SimpleTestCase):
+class CatalogueFormTests(TestCase):
 
     def setUp(self):
         url = reverse('home')
@@ -42,7 +76,7 @@ class CatalogueFormTests(SimpleTestCase):
         self.assertFalse(add_catalogue_form.is_valid())
 
 
-class ElibraryURLsTest(SimpleTestCase):
+class ElibraryURLsTest(TestCase):
     "Test the catalogue URLs"
 
     def test_homepage_url_name(self):
