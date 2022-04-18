@@ -16,12 +16,8 @@
         <hr>
         <div class="row">
 
-          <div class="col-md-6">
-          
+          <div class="col-md-6">          
         {% for book in books %}
-
-        
-
           <div class="card mb-4">
             <div class="card-header">
                 {{ book.ISBN }}
@@ -34,26 +30,19 @@
                     <br>
                     <strong>Availability:</strong> {{ book.availability }}
                   </p>
-
               </div>
-          </div>
-
-      
+          </div>      
         
         {% empty %}
           <p>Empty...</p>
         {% endfor %}
-
-        </div>
-        
-               
-            <div class="col-md-6">
-              
+        </div>               
+            <div class="col-md-6">            
 
                 <form method="post">
                     {% csrf_token %}
                    
-                    {{ add_catalogue_form.as_p }}
+                    {{ add_book_form.as_p }}
                     
                       <br>
                       <div class="text-center">
@@ -63,6 +52,8 @@
             </div>
             </div>
         </div>
+  </body>
+</html>
      
     
 

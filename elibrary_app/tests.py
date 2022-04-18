@@ -3,7 +3,7 @@ from django.urls.base import resolve
 from .models import Catalogue
 from django.urls import reverse
 from .views import home
-from .forms import AddCatalogueForm
+from .forms import AddBookForm
 
 class CatalogueViewTests(TestCase):
 
@@ -12,7 +12,7 @@ class CatalogueViewTests(TestCase):
     def test_book_list_view(self):
 
         """
-            A test method to show that the books we created are shown correctly on our template.
+            A test method to show that the books we created are shown correctly in our template.
         """
 
         Book_1 = Catalogue.objects.create(
@@ -38,10 +38,8 @@ class CatalogueViewTests(TestCase):
         self.assertIn('978-1-60309-3', response.content.decode())
 
 class CatalogueTemplateTests(TestCase):
-
     
     def test_homepage_template(self):
-
         response = self.client.get(reverse('home'))
         self.assertTemplateUsed(response, 'home.html')
 
@@ -60,24 +58,23 @@ class CatalogueFormTests(TestCase):
         url = reverse('home')
         self.response = self.client.get(url)
 
-    def test_catalogue_form(self):
-        form = self.response.context.get('add_catalogue_form')
-        self.assertIsInstance(form, AddCatalogueForm)
+    def test_book_form(self):
+        form = self.response.context.get('add_book_form')
+        self.assertIsInstance(form, AddBookForm)
         self.assertContains(self.response, 'csrfmiddlewaretoken')
 
     def test_bootstrap_class_used_for_default_styling(self):
-        form = self.response.context.get('add_catalogue_form')
+        form = self.response.context.get('add_book_form')
         self.assertIn('class="form-control"', form.as_p())
 
-    def test_catalogue_form_validation_for_blank_items(self):
-        add_catalogue_form = AddCatalogueForm(
+    def test_book_form_validation_for_blank_items(self):
+        add_book_form = AddBookForm(
             data={'title': '', 'ISBN': '', 'author': '', 'price': '', 'availability': ''}
             )
-        self.assertFalse(add_catalogue_form.is_valid())
+        self.assertFalse(add_book_form.is_valid())
 
 
 class ElibraryURLsTest(TestCase):
-    "Test the catalogue URLs"
 
     def test_homepage_url_name(self):
         response = self.client.get(reverse('home'))
@@ -89,10 +86,8 @@ class ElibraryURLsTest(TestCase):
 
 class CatalogueModelTests(TestCase):
 
-    "Test the catalogue model"
-
     def setUp(self):
-        self.c = Catalogue(
+        self.book = Catalogue(
             title = 'First Title',
             ISBN = '978-3-16-148410-0',
             author = 'Samuel Torimiro',
@@ -100,36 +95,36 @@ class CatalogueModelTests(TestCase):
             availability = 'True'
         )
         
-    def test_create_catalogue(self):
-        self.assertIsInstance(self.c, Catalogue)
+    def test_create_book(self):
+        self.assertIsInstance(self.book, Catalogue)
 
     def test_str_representation(self):
-        self.assertEquals(str(self.c), "First Title")
+        self.assertEquals(str(self.book), "First Title")
 
-    def test_saving_and_retrieving_catalogue(self):
-        first_catalogue = Catalogue()
-        first_catalogue.title = 'First Title'
-        first_catalogue.ISBN = '978-3-16-148410-0'
-        first_catalogue.author = 'Samuel Torimiro'
-        first_catalogue.price = '9.99'
-        first_catalogue.availability = 'True'
-        first_catalogue.save()
+    def test_saving_and_retrieving_book(self):
+        first_book = Catalogue()
+        first_book.title = 'First Title'
+        first_book.ISBN = '978-3-16-148410-0'
+        first_book.author = 'Samuel Torimiro'
+        first_book.price = '9.99'
+        first_book.availability = 'True'
+        first_book.save()
 
-        second_catalogue = Catalogue()
-        second_catalogue.title = 'Second Title'
-        second_catalogue.ISBN = '978-3-16-148410-1'
-        second_catalogue.author = 'Hannah Torimiro'
-        second_catalogue.price = '19.99'
-        second_catalogue.availability = 'False'
-        second_catalogue.save()
+        second_book = Catalogue()
+        second_book.title = 'Second Title'
+        second_book.ISBN = '978-3-16-148410-1'
+        second_book.author = 'Hannah Torimiro'
+        second_book.price = '19.99'
+        second_book.availability = 'False'
+        second_book.save()
 
-        saved_catalogues = Catalogue.objects.all()
-        self.assertEqual(saved_catalogues.count(), 2)
+        saved_books = Catalogue.objects.all()
+        self.assertEqual(saved_books.count(), 2)
 
-        first_saved_catalogue = saved_catalogues[0]
-        second_saved_catalogue = saved_catalogues[1]
-        self.assertEqual(first_saved_catalogue.title, 'First Title')
-        self.assertEqual(second_saved_catalogue.author, 'Hannah Torimiro')
+        first_saved_book = saved_books[0]
+        second_saved_book = saved_books[1]
+        self.assertEqual(first_saved_book.title, 'First Title')
+        self.assertEqual(second_saved_book.author, 'Hannah Torimiro')
 
 
 

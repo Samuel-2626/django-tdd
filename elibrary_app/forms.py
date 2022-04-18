@@ -2,7 +2,7 @@ from django import forms
 
 from .models import Catalogue
 
-class AddCatalogueForm(forms.ModelForm):
+class AddBookForm(forms.ModelForm):
     class Meta:
         model = Catalogue
         fields = "__all__"
